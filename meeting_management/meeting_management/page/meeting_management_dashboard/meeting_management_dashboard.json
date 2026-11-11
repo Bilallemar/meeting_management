@@ -1,0 +1,10 @@
+{
+  "doctype": "Page",
+  "name": "meeting-management-dashboard",
+  "page_name": "meeting-management-dashboard",
+  "module": "Meeting Management",
+  "title": "Meeting Management",
+  "standard": "Yes",
+  "system_page": 0,
+  "roles": []
+}

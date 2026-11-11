@@ -1,0 +1,243 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "autoname": "MEET-.#### ",
+ "creation": "2026-10-08 10:52:31.298332",
+ "custom": 1,
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_2_tab",
+  "meeting_information_section",
+  "meeting_type",
+  "board__department",
+  "company",
+  "column_break_tpef",
+  "project",
+  "meeting_date",
+  "start_time",
+  "column_break_kavl",
+  "location",
+  "onlin_meeting_link",
+  "end_time",
+  "meeting_status_section",
+  "status",
+  "chairperson",
+  "secretary",
+  "confirmation_history_section",
+  "confirmation",
+  "action_items_section",
+  "action_items",
+  "decisions_section",
+  "decisions",
+  "minutes_section",
+  "minutes",
+  "agenda_section",
+  "agenda",
+  "participants_section",
+  "participants"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_2_tab",
+   "fieldtype": "Tab Break",
+   "label": "Tab 2"
+  },
+  {
+   "fieldname": "meeting_information_section",
+   "fieldtype": "Section Break",
+   "label": "Meeting Information"
+  },
+  {
+   "fieldname": "meeting_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Meeting Type",
+   "options": "Board Meeting\nCommittee\nGeneral",
+   "reqd": 1
+  },
+  {
+   "fieldname": "board__department",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Board / Department",
+   "options": "Department",
+   "reqd": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_tpef",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "meeting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Meeting Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "start_time",
+   "fieldtype": "Time",
+   "label": "Start Time"
+  },
+  {
+   "fieldname": "column_break_kavl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "label": "Location "
+  },
+  {
+   "fieldname": "onlin_meeting_link",
+   "fieldtype": "Data",
+   "label": "Onlin Meeting Link",
+   "options": "URL"
+  },
+  {
+   "fieldname": "end_time",
+   "fieldtype": "Time",
+   "label": "End Time"
+  },
+  {
+   "fieldname": "meeting_status_section",
+   "fieldtype": "Section Break",
+   "label": "Meeting Status"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Draft\nScheduled\nHeld\nMinutes Draft\nPending Confirmation\nConfirmed\nClosed",
+   "read_only": 1
+  },
+  {
+   "fieldname": "chairperson",
+   "fieldtype": "Data",
+   "label": "Chairperson",
+   "read_only": 1
+  },
+  {
+   "fieldname": "secretary",
+   "fieldtype": "Data",
+   "label": "Secretary",
+   "read_only": 1
+  },
+  {
+   "fieldname": "confirmation_history_section",
+   "fieldtype": "Section Break",
+   "label": "Confirmation History"
+  },
+  {
+   "fieldname": "confirmation",
+   "fieldtype": "Table",
+   "label": "Confirmation",
+   "options": "Meeting Confirmation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "action_items_section",
+   "fieldtype": "Section Break",
+   "label": "Action Items"
+  },
+  {
+   "fieldname": "action_items",
+   "fieldtype": "Table",
+   "label": "Action Items",
+   "options": "Meeting Action Item"
+  },
+  {
+   "fieldname": "decisions_section",
+   "fieldtype": "Section Break",
+   "label": "Decisions"
+  },
+  {
+   "fieldname": "decisions",
+   "fieldtype": "Table",
+   "label": "Decisions",
+   "options": "Meeting Decision"
+  },
+  {
+   "fieldname": "minutes_section",
+   "fieldtype": "Section Break",
+   "label": "Minutes"
+  },
+  {
+   "fieldname": "minutes",
+   "fieldtype": "Text Editor",
+   "label": "Minutes"
+  },
+  {
+   "fieldname": "agenda_section",
+   "fieldtype": "Section Break",
+   "label": "Agenda"
+  },
+  {
+   "fieldname": "agenda",
+   "fieldtype": "Text Editor",
+   "label": "Agenda"
+  },
+  {
+   "fieldname": "participants_section",
+   "fieldtype": "Section Break",
+   "label": "Participants"
+  },
+  {
+   "fieldname": "participants",
+   "fieldtype": "Table",
+   "label": "Participants ",
+   "options": "Meeting Participant"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-11-11 16:55:22.229123",
+ "modified_by": "Administrator",
+ "module": "Meeting Management",
+ "name": "Management Meeting",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Meeting Participant"
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

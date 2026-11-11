@@ -1,0 +1,71 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-10-08 11:44:34.698201",
+ "custom": 1,
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "decision",
+  "decision_type",
+  "responsible",
+  "priority",
+  "status",
+  "confirmation_required"
+ ],
+ "fields": [
+  {
+   "fieldname": "decision",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Decision",
+   "reqd": 1
+  },
+  {
+   "fieldname": "decision_type",
+   "fieldtype": "Select",
+   "label": "Decision Type",
+   "options": "Operational\nFinancial\nStrategic"
+  },
+  {
+   "fieldname": "responsible",
+   "fieldtype": "Data",
+   "label": "Responsible"
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "label": "Priority ",
+   "options": "High\nMedium\nLow"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Proposed\nApproved\nRejected"
+  },
+  {
+   "default": "0",
+   "fieldname": "confirmation_required",
+   "fieldtype": "Check",
+   "label": "Confirmation Required"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-10-08 11:49:36.804409",
+ "modified_by": "Administrator",
+ "module": "Meeting Management",
+ "name": "Meeting Decision",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,83 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-10-08 11:28:49.729403",
+ "custom": 1,
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "member",
+  "member_name",
+  "role",
+  "attendance",
+  "confirmation",
+  "confirmed_on",
+  "comment"
+ ],
+ "fields": [
+  {
+   "fieldname": "member",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Member",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "member.employee_name",
+   "fetch_if_empty": 1,
+   "fieldname": "member_name",
+   "fieldtype": "Data",
+   "label": "Member Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "role",
+   "fieldtype": "Select",
+   "label": "Role",
+   "options": "Chairperson\nMember\nSecretary"
+  },
+  {
+   "default": "Pending",
+   "fieldname": "attendance",
+   "fieldtype": "Select",
+   "label": "Attendance",
+   "options": "Pending\nPresent\nAbsent"
+  },
+  {
+   "default": "Pending",
+   "fieldname": "confirmation",
+   "fieldtype": "Select",
+   "label": "Confirmation",
+   "options": "Pending\nConfirmed\nRejected"
+  },
+  {
+   "fieldname": "confirmed_on",
+   "fieldtype": "Datetime",
+   "label": "Confirmed On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Small Text",
+   "label": "Comment"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-10-10 12:13:47.354786",
+ "modified_by": "Administrator",
+ "module": "Meeting Management",
+ "name": "Meeting Participant",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
