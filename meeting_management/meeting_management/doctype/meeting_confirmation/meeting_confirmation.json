@@ -47,7 +47,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Meeting",
-   "options": "Management Meeting",
+   "options": "Meeting Management",
    "reqd": 1
   }
  ],
@@ -55,7 +55,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-11-11 16:55:21.828099",
+ "modified": "2026-11-11 17:18:27.119071",
  "modified_by": "Administrator",
  "module": "Meeting Management",
  "name": "Meeting Confirmation",

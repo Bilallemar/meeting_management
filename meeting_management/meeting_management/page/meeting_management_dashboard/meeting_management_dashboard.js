@@ -74,7 +74,7 @@ frappe.pages["meeting-management-dashboard"].on_page_load = function (wrapper) {
 	`);
 
 	$("#new-meeting-btn").on("click", function () {
-		frappe.new_doc("Management Meeting");
+		frappe.new_doc("Meeting Management");
 	});
 
 	load_meetings();
@@ -278,7 +278,7 @@ frappe.pages["meeting-management-dashboard"].on_page_load = function (wrapper) {
 					.addClass("btn btn-primary")
 					.text("Open Full Form")
 					.on("click", function () {
-						frappe.set_route("Form", "Management Meeting", meeting.name);
+						frappe.set_route("Form", "Meeting Management", meeting.name);
 					})
 					.appendTo(action_area);
 

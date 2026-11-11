@@ -5,13 +5,13 @@ import frappe
 def get_meeting_dashboard():
     """Return meeting statistics and recent meeting records."""
 
-    if not frappe.has_permission("Management Meeting", "read"):
+    if not frappe.has_permission("Meeting Management", "read"):
         frappe.throw(
             "You do not have permission to view meetings.",
             frappe.PermissionError,
         )
 
-    meta = frappe.get_meta("Management Meeting")
+    meta = frappe.get_meta("Meeting Management")
 
     fields = [
         "meeting_type",
@@ -29,13 +29,13 @@ def get_meeting_dashboard():
     ]
 
     records = frappe.get_list(
-        "Management Meeting",
+        "Meeting Management",
         fields=["name"] + fields,
         order_by="creation desc",
         page_length=10,
     )
 
-    total = frappe.db.count("Management Meeting")
+    total = frappe.db.count("Meeting Management")
 
     status_field = (
         "workflow_state"
@@ -45,7 +45,7 @@ def get_meeting_dashboard():
 
     def count_by_status(value):
         return frappe.db.count(
-            "Management Meeting",
+            "Meeting Management",
             filters={status_field: value},
         )
 
@@ -62,16 +62,16 @@ def get_meeting_dashboard():
 def get_meeting_details(meeting_name):
     """Return a meeting and its existing child-table data."""
 
-    if not frappe.has_permission("Management Meeting", "read"):
+    if not frappe.has_permission("Meeting Management", "read"):
         frappe.throw(
             "You do not have permission to view meetings.",
             frappe.PermissionError,
         )
 
-    if not frappe.db.exists("Management Meeting", meeting_name):
+    if not frappe.db.exists("Meeting Management", meeting_name):
         frappe.throw("Meeting not found.")
 
-    doc = frappe.get_doc("Management Meeting", meeting_name)
+    doc = frappe.get_doc("Meeting Management", meeting_name)
 
     if not doc.has_permission("read"):
         frappe.throw(
@@ -84,7 +84,7 @@ def get_meeting_details(meeting_name):
     data["attachments"] = frappe.get_all(
         "File",
         filters={
-            "attached_to_doctype": "Management Meeting",
+            "attached_to_doctype": "Meeting Management",
             "attached_to_name": meeting_name,
         },
         fields=["name", "file_name", "file_url", "file_size"],
@@ -94,7 +94,7 @@ def get_meeting_details(meeting_name):
     data["activity"] = frappe.get_all(
         "Comment",
         filters={
-            "reference_doctype": "Management Meeting",
+            "reference_doctype": "Meeting Management",
             "reference_name": meeting_name,
         },
         fields=["content", "comment_by", "creation", "comment_type"],
