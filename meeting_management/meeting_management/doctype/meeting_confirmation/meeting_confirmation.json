@@ -9,6 +9,7 @@
  "field_order": [
   "member",
   "decision",
+  "decision_id",
   "response",
   "response_date",
   "comment",
@@ -27,10 +28,16 @@
    "label": "Decision"
   },
   {
+   "fieldname": "decision_id",
+   "fieldtype": "Data",
+   "label": "Decision ID",
+   "read_only": 1
+  },
+  {
    "fieldname": "response",
    "fieldtype": "Select",
    "label": "Response ",
-   "options": "Pending\nConfirmed\nRejected"
+   "options": "Pending\nApproved\nRejected"
   },
   {
    "fieldname": "response_date",
@@ -47,7 +54,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Meeting",
-   "options": "Meeting Management",
+   "options": "Meeting",
    "reqd": 1
   }
  ],

@@ -9,7 +9,7 @@ frappe.pages["meeting-management-dashboard"].on_page_load = function (wrapper) {
 		const link = document.createElement("link");
 		link.id = "meeting-management-custom-css";
 		link.rel = "stylesheet";
-		link.href = "/assets/meeting_management/css/meeting_management.css";
+		link.href = "/assets/meeting_management/css/meeting_management.css?v=1794921627";
 		document.head.appendChild(link);
 	}
 	const ICONS = {
@@ -22,18 +22,53 @@ frappe.pages["meeting-management-dashboard"].on_page_load = function (wrapper) {
 	const icon = (name) =>
 		`<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[name]}</svg>`;
 	$(page.main).html(`
-		<div class="meeting-dashboard">
-			<div class="meeting-dashboard-header">
-				<div>
-					<h2>Meeting Management</h2>
-					<p>Manage meetings, participants, minutes and action items.</p>
-				</div>
-				<button class="btn btn-primary" id="new-meeting-btn">
-					+ New Meeting
-				</button>
-			</div>
 
-	<div class="meeting-dashboard-stats">
+<style>
+.meeting-section-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 20px 0 12px;
+    padding-left: 10px;
+    border-left: 3px solid #4f46e5;
+}
+#tasks-overview, #meetings-overview {
+    margin-bottom: 18px;
+}
+</style>
+
+<div class="meeting-dashboard meeting-dashboard-split">
+
+
+
+    <div class="meeting-overview-panel meeting-tasks-panel">
+<h4 class="meeting-section-title">Tasks Overview</h4>
+<div id="tasks-overview">
+        <div class="meeting-dashboard-stats">
+            <div class="meeting-stat-card"><div class="meeting-stat-body"><span>Total Tasks</span><h3 id="task-total">—</h3></div></div>
+            <div class="meeting-stat-card"><div class="meeting-stat-body"><span>Open</span><h3 id="task-open">—</h3></div></div>
+            <div class="meeting-stat-card"><div class="meeting-stat-body"><span>Working</span><h3 id="task-working">—</h3></div></div>
+            <div class="meeting-stat-card"><div class="meeting-stat-body"><span>Completed</span><h3 id="task-completed">—</h3></div></div>
+            <div class="meeting-stat-card"><div class="meeting-stat-body"><span>Overdue</span><h3 id="task-overdue">—</h3><small>Click to view overdue tasks</small></div></div>
+        </div>
+        <div class="meeting-dashboard-charts">
+            <div class="meeting-dashboard-panel meeting-chart-panel">
+                <h4>Task Status Distribution</h4>
+                <div id="task-status-chart"></div><div id="task-status-legend" class="meeting-custom-legend"></div>
+            </div>
+            <div class="meeting-dashboard-panel meeting-chart-panel">
+                <h4>Task Progress</h4>
+                <div id="task-progress-chart"></div><div class="meeting-bar-labels"><span>Open</span><span>Working</span><span>Completed</span></div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<div class="meeting-overview-panel meeting-meetings-panel">
+<h4 class="meeting-section-title">Meetings Overview</h4>
+<div id="meetings-overview">
+    <div class="meeting-dashboard-stats">
 	<div class="meeting-stat-card meeting-stat--indigo">
 		<div class="meeting-stat-icon">${icon("total")}</div>
 		<div class="meeting-stat-body">
@@ -51,7 +86,7 @@ frappe.pages["meeting-management-dashboard"].on_page_load = function (wrapper) {
 	<div class="meeting-stat-card meeting-stat--amber">
 		<div class="meeting-stat-icon">${icon("clock")}</div>
 		<div class="meeting-stat-body">
-			<span>Pending Confirmation</span>
+			<span>Held</span>
 			<h3 id="pending-count">—</h3>
 		</div>
 	</div>
@@ -62,22 +97,89 @@ frappe.pages["meeting-management-dashboard"].on_page_load = function (wrapper) {
 			<h3 id="closed-count">—</h3>
 		</div>
 	</div>
+
+        <div class="meeting-stat-card meeting-stat--draft">
+                <div class="meeting-stat-body">
+                        <span>Draft Meetings</span>
+                        <h3 id="draft-count">—</h3>
+                </div>
+        </div>
 </div>
 
-			<div class="meeting-dashboard-panel">
-				<h4>Recent Meetings</h4>
-				<div id="meeting-list">Loading meetings...</div>
-			</div>
+                        <div class="meeting-dashboard-charts">
+                                <div class="meeting-dashboard-panel meeting-chart-panel">
+                                        <h4>Meeting Status Distribution</h4>
+                                        <div id="meeting-status-chart"></div><div id="meeting-status-legend" class="meeting-custom-legend"></div>
+                                </div>
+                                <div class="meeting-dashboard-panel meeting-chart-panel">
+                                        <h4>Meetings by Month (Last 12 Months)</h4>
+                                        <div id="meeting-monthly-chart"></div>
+                                </div>
+                        </div>
 
-			<div id="meeting-details-container"></div>
+
+
+
+    </div>
+    </div>
+<div id="overdue-task-list" class="meeting-dashboard-panel"
+         style="display:none;margin-top:20px;padding:20px"></div>
+    <div id="meeting-details-container"></div>
 		</div>
 	`);
 
-	$("#new-meeting-btn").on("click", function () {
-		frappe.new_doc("Meeting Management");
-	});
 
-	load_meetings();
+
+
+
+
+
+    $("#task-overdue").closest(".meeting-stat-card")
+        .css("cursor", "pointer")
+        .on("click", function() {
+            const tasks = window.meetingOverdueTasks || [];
+            const panel = $("#overdue-task-list");
+
+            if (panel.is(":visible")) {
+                panel.hide();
+                return;
+            }
+
+            panel.empty();
+            $("<h4>").text("Overdue Tasks").appendTo(panel);
+
+            if (!tasks.length) {
+                $("<p>").text("No overdue tasks found.").appendTo(panel);
+            } else {
+                const table = $('<table class="table table-bordered table-hover"></table>');
+                table.append(
+                    "<thead><tr><th>Task</th><th>Assignee</th><th>Deadline</th><th>Days Overdue</th><th>Meeting</th></tr></thead>"
+                );
+
+                const body = $("<tbody>").appendTo(table);
+
+                tasks.forEach(function(t) {
+                    const row = $("<tr>").appendTo(body);
+                    $("<td>").text(t.task || "—").appendTo(row);
+                    $("<td>").text(t.assignee || "—").appendTo(row);
+                    $("<td>").text(t.deadline || "—").appendTo(row);
+                    $("<td>").text(t.days_overdue).appendTo(row);
+
+                    const meetingCell = $("<td>").appendTo(row);
+                    $("<a href='#'>").text(t.meeting).on("click", function(e) {
+                        e.preventDefault();
+                        frappe.set_route("Form", "Meeting", t.meeting);
+                    }).appendTo(meetingCell);
+                });
+
+                panel.append(table);
+            }
+
+            panel.show();
+        });
+
+load_task_dashboard();
+        load_meetings();
 
 	function create_status_badge(value) {
 		const status = String(value || "").trim();
@@ -91,6 +193,22 @@ frappe.pages["meeting-management-dashboard"].on_page_load = function (wrapper) {
 			.addClass(`meeting-status--${class_name}`)
 			.text(status || "—");
 	}
+
+
+    function render_chart_legend(selector, labels, values, colors) {
+        const container = $(selector).empty();
+        labels.forEach((label, i) => {
+            if (!values[i]) return;
+            const item = $('<div class="meeting-legend-item"></div>');
+            $('<span class="meeting-legend-dot"></span>')
+                .css("background-color", colors[i % colors.length])
+                .appendTo(item);
+            $('<span></span>')
+                .text(label + " (" + values[i] + ")")
+                .appendTo(item);
+            container.append(item);
+        });
+    }
 
 	function load_meetings() {
 		frappe.call({
@@ -107,62 +225,44 @@ frappe.pages["meeting-management-dashboard"].on_page_load = function (wrapper) {
 				$("#scheduled-count").text(data.scheduled ?? 0);
 				$("#pending-count").text(data.pending_confirmation ?? 0);
 				$("#closed-count").text(data.completed ?? 0);
+                                $("#draft-count").text(data.draft ?? 0);
 
-				if (!data.meetings || data.meetings.length === 0) {
-					$("#meeting-list").text("No meetings found.");
-					return;
-				}
+                            // Charts use real database data from the dashboard API.
+                            if (typeof frappe.Chart === "function" && data.status_chart && data.monthly_chart) {
+                                    new frappe.Chart("#meeting-status-chart", {
+                                            data: {
+                                                    labels: data.status_chart.labels,
+                                                    datasets: [{ values: data.status_chart.values }]
+                                            },
+                                            type: "pie",
+                                            height: 220,
+                    showLegend: false
+                                    });
 
-				const table = $(`
-					<div class="table-responsive">
-						<table class="table table-bordered">
-							<thead>
-								<tr>
-									<th>Meeting ID</th>
-									<th>Type</th>
-									<th>Date</th>
-									<th>Time</th>
-									<th>Status</th>
-									<th>Location</th>
-								</tr>
-							</thead>
-							<tbody></tbody>
-						</table>
-					</div>
-				`);
+                                    render_chart_legend(
+        "#meeting-status-legend",
+        data.status_chart.labels,
+        data.status_chart.values,
+        ["#f47cac", "#348bd2", "#49b978", "#a4aeb6", "#ffd078", "#f56b6b", "#8b5cf6"]
+    );
 
-				data.meetings.forEach((meeting) => {
-					const row = $("<tr>").css("cursor", "pointer");
+    new frappe.Chart("#meeting-monthly-chart", {
+                                            data: {
+                                                    labels: data.monthly_chart.labels,
+                                                    datasets: [{
+                                                            name: "Meetings",
+                                                            values: data.monthly_chart.values
+                                                    }]
+                                            },
+                                            type: "bar",
+                                            height: 280
+                                    });
+                            } else {
+                                    $("#meeting-status-chart, #meeting-monthly-chart")
+                                            .text("Chart library or chart data is unavailable.");
+                            }
 
-					const values = [
-						meeting.name,
-						meeting.meeting_type,
-						meeting.meeting_date,
-						meeting.start_time,
-						meeting.workflow_state || meeting.status,
-						meeting.location,
-					];
 
-					values.forEach((value, index) => {
-						const cell = $("<td>");
-
-						// The fifth column (index 4) contains the meeting status.
-						if (index === 4 && value) {
-							cell.append(create_status_badge(value));
-						} else {
-							cell.text(value || "—");
-						}
-
-						row.append(cell);
-					});
-					row.on("click", function () {
-						load_meeting_details(meeting.name);
-					});
-
-					table.find("tbody").append(row);
-				});
-
-				$("#meeting-list").empty().append(table);
 			},
 		});
 	}
@@ -278,7 +378,7 @@ frappe.pages["meeting-management-dashboard"].on_page_load = function (wrapper) {
 					.addClass("btn btn-primary")
 					.text("Open Full Form")
 					.on("click", function () {
-						frappe.set_route("Form", "Meeting Management", meeting.name);
+						frappe.set_route("Form", "Meeting", meeting.name);
 					})
 					.appendTo(action_area);
 
@@ -313,14 +413,11 @@ frappe.pages["meeting-management-dashboard"].on_page_load = function (wrapper) {
 				]);
 				add_section(container, "Meeting Information", info);
 
-				// Workflow stages: display only; existing workflow remains unchanged.
+				// Four-stage meeting workflow.
 				const stages = [
 					"Draft",
 					"Scheduled",
 					"Held",
-					"Minutes Draft",
-					"Pending Confirmation",
-					"Confirmed",
 					"Closed",
 				];
 
@@ -480,7 +577,114 @@ frappe.pages["meeting-management-dashboard"].on_page_load = function (wrapper) {
 					meeting.decisions,
 				);
 
-				// Action Items
+
+                                // Decision Voting
+                                const voting_section = $("<div>");
+
+                                if (meeting.can_respond_attendance) {
+                                    const attendance_panel = $('<div class="meeting-dashboard-panel"></div>');
+                                    $('<h4>').text('Confirm attendance').appendTo(attendance_panel);
+                                    ['Confirmed', 'Rejected'].forEach((choice) => {
+                                        $('<button class="btn btn-default btn-sm">')
+                                            .text(choice === 'Confirmed' ? 'I can attend' : 'I cannot attend')
+                                            .css('margin', '5px')
+                                            .on('click', function () {
+                                                frappe.call({
+                                                    method: 'meeting_management.meeting_management.api.respond_attendance',
+                                                    args: {meeting_name: meeting.name, response: choice},
+                                                    callback: function (r) {
+                                                        if (!r.exc) load_meeting_details(meeting.name);
+                                                    }
+                                                });
+                                            }).appendTo(attendance_panel);
+                                    });
+                                    voting_section.append(attendance_panel);
+                                }
+                                (meeting.decisions || []).forEach((decision) => {
+                                        const summary = (meeting.vote_summary || []).find(
+                                                (item) => item.decision_id === decision.name
+                                        ) || {};
+
+                                        const panel = $('<div class="meeting-dashboard-panel"></div>');
+                                        $("<h4>").text(decision.decision || "Decision").appendTo(panel);
+
+                                        $("<p>").text(
+                                                `Approved: ${summary.approved || 0} | Rejected: ${summary.rejected || 0} | Pending: ${summary.pending || 0}`
+                                        ).appendTo(panel);
+
+                                        const own_vote = (meeting.confirmation || []).find(
+                                                (item) =>
+                                                        item.decision_id === decision.name &&
+                                                        item.member === meeting.current_employee
+                                        );
+
+                                        if (meeting.can_vote && !own_vote) {
+                                                $("<p>").text(
+                                                        "Your response: " + (own_vote ? own_vote.response : "Pending")
+                                                ).appendTo(panel);
+
+                                                const comment_box = $('<textarea class="form-control" rows="2" placeholder="Optional comment"></textarea>');
+                                                comment_box.val(own_vote ? own_vote.comment || "" : "");
+                                                panel.append(comment_box);
+
+                                                ["Approved", "Rejected"].forEach((choice) => {
+                                                        $("<button>")
+                                                                .addClass(choice === "Approved" ? "btn btn-success" : choice === "Rejected" ? "btn btn-danger" : "btn btn-default")
+                                                                .css("margin", "8px 8px 0 0")
+                                                                .text(choice)
+                                                                .on("click", function () {
+                                                                        frappe.call({
+                                                                                method: "meeting_management.meeting_management.api.submit_decision_vote",
+                                                                                args: {
+                                                                                        meeting_name: meeting.name,
+                                                                                        decision_id: decision.name,
+                                                                                        response: choice,
+                                                                                        comment: comment_box.val()
+                                                                                },
+                                                                                callback: function (r) {
+                                                                                        if (!r.exc && r.message && r.message.success) {
+                                                                                                frappe.show_alert({
+                                                                                                        message: r.message.message,
+                                                                                                        indicator: "green"
+                                                                                                });
+                                                                                                load_meeting_details(meeting.name);
+                                                                                        }
+                                                                                }
+                                                                        });
+                                                                })
+                                                                .appendTo(panel);
+                                                });
+                                        }
+
+                                        if (meeting.can_finalize_decisions && (summary.pending || 0) === 0) {
+                                                const final_label = $('<p>').text('Chairperson final decision: ' + (decision.status || 'Proposed'));
+                                                panel.append(final_label);
+                                                ['Approved', 'Rejected'].forEach((final_choice) => {
+                                                        $('<button class="btn btn-default btn-sm">')
+                                                                .text('Finalize: ' + final_choice)
+                                                                .css('margin', '4px')
+                                                                .on('click', function () {
+                                                                        frappe.confirm('Record final decision as ' + final_choice + '?', () => {
+                                                                                frappe.call({
+                                                                                        method: 'meeting_management.meeting_management.api.finalize_meeting_decision',
+                                                                                        args: {meeting_name: meeting.name, decision_id: decision.name, final_status: final_choice},
+                                                                                        callback: (r) => {
+                                                                                                if (!r.exc && r.message && r.message.success) {
+                                                                                                        frappe.show_alert({message: r.message.message, indicator: 'green'});
+                                                                                                        load_meeting_details(meeting.name);
+                                                                                                }
+                                                                                        }
+                                                                                });
+                                                                        });
+                                                                }).appendTo(panel);
+                                                });
+                                        }
+                                        voting_section.append(panel);
+                                });
+
+                                add_section(container, "Decision Voting", voting_section);
+
+// Action Items
 				add_table(
 					container,
 					"Action Items",
@@ -499,7 +703,7 @@ frappe.pages["meeting-management-dashboard"].on_page_load = function (wrapper) {
 					container,
 					"Confirmation History",
 					[
-						{ label: "Member", field: "member" },
+						{ label: "Member", field: "member_name" },
 						{ label: "Decision", field: "decision" },
 						{ label: "Response", field: "response" },
 						{ label: "Date", field: "response_date" },
@@ -531,4 +735,69 @@ frappe.pages["meeting-management-dashboard"].on_page_load = function (wrapper) {
 			},
 		});
 	}
+
+    function load_task_dashboard() {
+        frappe.call({
+            method: "meeting_management.meeting_management.api.get_task_dashboard",
+            callback: function(r) {
+                if (r.exc || !r.message) {
+                    frappe.show_alert({
+                        message: "Unable to load task statistics",
+                        indicator: "red"
+                    });
+                    return;
+                }
+
+                const d = r.message;
+                window.meetingOverdueTasks = d.overdue_tasks || [];
+
+                $("#task-total").text(d.total);
+                $("#task-open").text(d.open);
+                $("#task-working").text(d.working);
+                $("#task-completed").text(d.completed);
+                $("#task-overdue").text(d.overdue);
+
+                $("#task-status-chart").empty();
+                $("#task-progress-chart").empty();
+
+                if (!d.total) {
+                    $("#task-status-chart").text("No tasks available.");
+                    $("#task-progress-chart").text("No tasks available.");
+                    return;
+                }
+
+                new frappe.Chart("#task-status-chart", {
+                    data: {
+                        labels: ["Open", "Working", "Completed"],
+                        datasets: [{
+                            values: [d.open, d.working, d.completed]
+                        }]
+                    },
+                    type: "pie",
+                    height: 220,
+                    showLegend: false
+                });
+
+                render_chart_legend(
+        "#task-status-legend",
+        ["Open", "Working", "Completed"],
+        [d.open, d.working, d.completed],
+        ["#f47cac", "#348bd2", "#49b978"]
+    );
+
+    new frappe.Chart("#task-progress-chart", {
+                    data: {
+                        labels: ["Open", "Working", "Completed"],
+                        datasets: [{
+                            name: "Tasks",
+                            values: [d.open, d.working, d.completed]
+                        }]
+                    },
+                    type: "bar",
+                    height: 280
+                });
+            }
+        });
+    }
+
 };

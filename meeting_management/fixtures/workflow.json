@@ -2,7 +2,7 @@
  {
   "docstatus": 0,
   "doctype": "Workflow",
-  "document_type": "Meeting Management",
+  "document_type": "Meeting",
   "enable_action_confirmation": 0,
   "is_active": 1,
   "modified": "2026-10-08 12:52:04.372374",
@@ -11,7 +11,7 @@
   "send_email_alert": 0,
   "states": [
    {
-    "allow_edit": "Administrator",
+    "allow_edit": "Meeting Manager",
     "avoid_status_override": 0,
     "doc_status": "0",
     "evaluate_as_expression": 0,
@@ -25,7 +25,7 @@
     "workflow_builder_id": null
    },
    {
-    "allow_edit": "Administrator",
+    "allow_edit": "Meeting Manager",
     "avoid_status_override": 0,
     "doc_status": "0",
     "evaluate_as_expression": 0,
@@ -39,7 +39,7 @@
     "workflow_builder_id": null
    },
    {
-    "allow_edit": "Administrator",
+    "allow_edit": "Meeting Manager",
     "avoid_status_override": 0,
     "doc_status": "0",
     "evaluate_as_expression": 0,
@@ -53,49 +53,7 @@
     "workflow_builder_id": null
    },
    {
-    "allow_edit": "Administrator",
-    "avoid_status_override": 0,
-    "doc_status": "0",
-    "evaluate_as_expression": 0,
-    "is_optional_state": 0,
-    "message": null,
-    "next_action_email_template": null,
-    "send_email": 1,
-    "state": "Minutes Draft",
-    "update_field": "status",
-    "update_value": "Minutes Draft",
-    "workflow_builder_id": null
-   },
-   {
-    "allow_edit": "Administrator",
-    "avoid_status_override": 0,
-    "doc_status": "0",
-    "evaluate_as_expression": 0,
-    "is_optional_state": 0,
-    "message": null,
-    "next_action_email_template": null,
-    "send_email": 1,
-    "state": "Pending Confirmation",
-    "update_field": "status",
-    "update_value": "Pending Confirmation",
-    "workflow_builder_id": null
-   },
-   {
-    "allow_edit": "Administrator",
-    "avoid_status_override": 0,
-    "doc_status": "0",
-    "evaluate_as_expression": 0,
-    "is_optional_state": 0,
-    "message": null,
-    "next_action_email_template": null,
-    "send_email": 1,
-    "state": "Confirmed",
-    "update_field": "status",
-    "update_value": "Confirmed",
-    "workflow_builder_id": null
-   },
-   {
-    "allow_edit": "Administrator",
+    "allow_edit": "Meeting Manager",
     "avoid_status_override": 0,
     "doc_status": "0",
     "evaluate_as_expression": 0,
@@ -107,13 +65,55 @@
     "update_field": "status",
     "update_value": "Closed",
     "workflow_builder_id": null
+   },
+   {
+    "allow_edit": "System Manager",
+    "avoid_status_override": 0,
+    "doc_status": "0",
+    "evaluate_as_expression": 0,
+    "is_optional_state": 1,
+    "message": null,
+    "next_action_email_template": null,
+    "send_email": 0,
+    "state": "Confirmed",
+    "update_field": "status",
+    "update_value": "Confirmed",
+    "workflow_builder_id": null
+   },
+   {
+    "allow_edit": "System Manager",
+    "avoid_status_override": 0,
+    "doc_status": "0",
+    "evaluate_as_expression": 0,
+    "is_optional_state": 1,
+    "message": null,
+    "next_action_email_template": null,
+    "send_email": 0,
+    "state": "Minutes Draft",
+    "update_field": "status",
+    "update_value": "Minutes Draft",
+    "workflow_builder_id": null
+   },
+   {
+    "allow_edit": "System Manager",
+    "avoid_status_override": 0,
+    "doc_status": "0",
+    "evaluate_as_expression": 0,
+    "is_optional_state": 1,
+    "message": null,
+    "next_action_email_template": null,
+    "send_email": 0,
+    "state": "Pending Confirmation",
+    "update_field": "status",
+    "update_value": "Pending Confirmation",
+    "workflow_builder_id": null
    }
   ],
   "transitions": [
    {
     "action": "Schedule",
     "allow_self_approval": 1,
-    "allowed": "Administrator",
+    "allowed": "Meeting Manager",
     "condition": null,
     "next_state": "Scheduled",
     "send_email_to_creator": 0,
@@ -124,7 +124,7 @@
    {
     "action": "Mark as Held",
     "allow_self_approval": 1,
-    "allowed": "Administrator",
+    "allowed": "Meeting Manager",
     "condition": null,
     "next_state": "Held",
     "send_email_to_creator": 0,
@@ -133,46 +133,13 @@
     "workflow_builder_id": null
    },
    {
-    "action": "Add Minutes",
-    "allow_self_approval": 1,
-    "allowed": "Administrator",
-    "condition": null,
-    "next_state": "Minutes Draft",
-    "send_email_to_creator": 0,
-    "state": "Held",
-    "transition_tasks": null,
-    "workflow_builder_id": null
-   },
-   {
-    "action": "Send for Confirmation",
-    "allow_self_approval": 1,
-    "allowed": "Administrator",
-    "condition": null,
-    "next_state": "Pending Confirmation",
-    "send_email_to_creator": 0,
-    "state": "Minutes Draft",
-    "transition_tasks": null,
-    "workflow_builder_id": null
-   },
-   {
-    "action": "Confirm",
-    "allow_self_approval": 1,
-    "allowed": "Administrator",
-    "condition": null,
-    "next_state": "Confirmed",
-    "send_email_to_creator": 0,
-    "state": "Pending Confirmation",
-    "transition_tasks": null,
-    "workflow_builder_id": null
-   },
-   {
     "action": "Close Meeting",
     "allow_self_approval": 1,
-    "allowed": "Administrator",
+    "allowed": "Meeting Manager",
     "condition": null,
     "next_state": "Closed",
     "send_email_to_creator": 0,
-    "state": "Confirmed",
+    "state": "Held",
     "transition_tasks": null,
     "workflow_builder_id": null
    }

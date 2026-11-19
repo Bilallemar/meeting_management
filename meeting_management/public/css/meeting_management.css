@@ -399,3 +399,473 @@
 		padding: 16px;
 	}
 }
+
+
+/* Meeting Dashboard Charts */
+.meeting-dashboard-charts {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+        margin: 24px 0;
+}
+
+.meeting-chart-panel {
+        min-width: 0;
+        padding: 20px;
+        background: var(--card-bg, #fff);
+        border: 1px solid var(--border-color, #e5e7eb);
+        border-radius: 12px;
+}
+
+.meeting-chart-panel h4 {
+        margin: 0 0 18px;
+        font-weight: 600;
+}
+
+@media (max-width: 768px) {
+        .meeting-dashboard-charts {
+                grid-template-columns: 1fr;
+        }
+}
+
+
+/* Meeting Management: compact two-column dashboard */
+@media (min-width: 992px) {
+    .meeting-dashboard {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        column-gap: 18px;
+        align-items: start;
+    }
+
+    .meeting-dashboard > #tasks-overview {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .meeting-dashboard > #meetings-overview {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .meeting-dashboard > .meeting-section-title:nth-of-type(1) {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .meeting-dashboard > .meeting-section-title:nth-of-type(2) {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .meeting-dashboard > #overdue-task-list,
+    .meeting-dashboard > #meeting-details-container {
+        grid-column: 1 / -1;
+    }
+}
+
+.meeting-dashboard #tasks-overview,
+.meeting-dashboard #meetings-overview {
+    min-width: 0;
+}
+
+.meeting-dashboard .meeting-dashboard-stats {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin-bottom: 14px;
+}
+
+.meeting-dashboard .meeting-stat-card {
+    min-width: 0 !important;
+    min-height: 94px !important;
+    padding: 14px !important;
+    border-radius: 12px !important;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, .04);
+    transition: transform .15s, box-shadow .15s;
+}
+
+.meeting-dashboard .meeting-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, .10);
+}
+
+.meeting-dashboard #tasks-overview .meeting-stat-card:nth-child(1) {
+    background: #eff6ff !important;
+    border-left: 4px solid #2563eb;
+}
+.meeting-dashboard #tasks-overview .meeting-stat-card:nth-child(2) {
+    background: #fffbeb !important;
+    border-left: 4px solid #d97706;
+}
+.meeting-dashboard #tasks-overview .meeting-stat-card:nth-child(3) {
+    background: #f5f3ff !important;
+    border-left: 4px solid #7c3aed;
+}
+.meeting-dashboard #tasks-overview .meeting-stat-card:nth-child(4) {
+    background: #ecfdf5 !important;
+    border-left: 4px solid #059669;
+}
+.meeting-dashboard #tasks-overview .meeting-stat-card:nth-child(5) {
+    background: #fef2f2 !important;
+    border-left: 4px solid #dc2626;
+}
+
+.meeting-dashboard #meetings-overview .meeting-stat-card:nth-child(1) {
+    background: #eff6ff !important;
+    border-left: 4px solid #2563eb;
+}
+.meeting-dashboard #meetings-overview .meeting-stat-card:nth-child(2) {
+    background: #fffbeb !important;
+    border-left: 4px solid #d97706;
+}
+.meeting-dashboard #meetings-overview .meeting-stat-card:nth-child(3) {
+    background: #ecfdf5 !important;
+    border-left: 4px solid #059669;
+}
+.meeting-dashboard #meetings-overview .meeting-stat-card:nth-child(4) {
+    background: #f1f5f9 !important;
+    border-left: 4px solid #64748b;
+}
+
+.meeting-dashboard .meeting-dashboard-charts {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 12px !important;
+}
+
+.meeting-dashboard .meeting-dashboard-charts > * {
+    min-width: 0;
+    max-width: 100%;
+}
+
+@media (max-width: 991px) {
+    .meeting-dashboard .meeting-dashboard-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+/* Final dashboard layout correction */
+@media (min-width: 992px) {
+    .meeting-dashboard {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+        gap: 12px 18px !important;
+        align-items: start !important;
+    }
+
+    .meeting-dashboard > .meeting-section-title {
+        margin: 0 !important;
+        padding: 12px 14px !important;
+        background: #f1f5f9;
+        border-radius: 10px;
+        border-left: 4px solid #2563eb;
+    }
+
+    .meeting-dashboard > .meeting-section-title:first-of-type {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+    }
+
+    .meeting-dashboard > .meeting-section-title:nth-of-type(2) {
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+    }
+
+    .meeting-dashboard > #tasks-overview {
+        grid-column: 1 !important;
+        grid-row: 2 !important;
+    }
+
+    .meeting-dashboard > #meetings-overview {
+        grid-column: 2 !important;
+        grid-row: 2 !important;
+    }
+
+    .meeting-dashboard > #overdue-task-list,
+    .meeting-dashboard > #meeting-details-container {
+        grid-column: 1 / -1 !important;
+    }
+}
+
+/* Meeting dashboard: two independent overview panels */
+@media (min-width: 992px) {
+    .meeting-dashboard.meeting-dashboard-split {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+        gap: 18px !important;
+        align-items: start !important;
+    }
+
+    .meeting-dashboard-split > .meeting-tasks-panel {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+    }
+
+    .meeting-dashboard-split > .meeting-meetings-panel {
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+    }
+
+    .meeting-dashboard-split > #overdue-task-list,
+    .meeting-dashboard-split > #meeting-details-container {
+        grid-column: 1 / -1 !important;
+    }
+}
+
+.meeting-dashboard-split .meeting-overview-panel {
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 3px 14px rgba(15,23,42,.05);
+}
+
+.meeting-dashboard-split .meeting-section-title {
+    margin: 0 0 16px !important;
+    padding: 10px 12px !important;
+    border-radius: 8px;
+    background: #f8fafc;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.meeting-dashboard-split .meeting-dashboard-stats {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    gap: 10px !important;
+}
+
+.meeting-dashboard-split .meeting-stat-card {
+    min-width: 0 !important;
+    min-height: 88px !important;
+    padding: 12px !important;
+    border-radius: 10px !important;
+}
+
+.meeting-dashboard-split .meeting-stat-body h3 {
+    font-size: 25px !important;
+    margin: 5px 0 0 !important;
+}
+
+.meeting-dashboard-split .meeting-dashboard-charts {
+    display: grid !important;
+    grid-template-columns: minmax(0,1fr) !important;
+    gap: 12px !important;
+    margin-top: 14px;
+}
+
+.meeting-dashboard-split .meeting-chart-panel {
+    min-width: 0;
+    padding: 12px !important;
+}
+
+.meeting-dashboard-split .meeting-chart-panel h4 {
+    font-size: 14px !important;
+}
+
+@media (max-width: 991px) {
+    .meeting-dashboard.meeting-dashboard-split {
+        display: flex !important;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .meeting-dashboard-split .meeting-overview-panel {
+        width: 100%;
+    }
+}
+
+/* Balanced Meeting Management Dashboard */
+
+.meeting-dashboard-split {
+    align-items: stretch !important;
+}
+
+.meeting-dashboard-split > .meeting-overview-panel {
+    height: 100% !important;
+    min-width: 0 !important;
+    padding: 14px !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.meeting-dashboard-split .meeting-section-title {
+    margin: 0 0 12px !important;
+    padding: 9px 12px !important;
+    font-size: 15px !important;
+}
+
+.meeting-dashboard-split #tasks-overview,
+.meeting-dashboard-split #meetings-overview {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+    margin-bottom: 0 !important;
+}
+
+.meeting-dashboard-split .meeting-dashboard-stats {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+}
+
+.meeting-dashboard-split .meeting-stat-card {
+    min-height: 85px !important;
+    padding: 12px !important;
+    margin: 0 !important;
+}
+
+/* Overdue occupies the full final row */
+.meeting-dashboard-split #tasks-overview
+.meeting-stat-card:nth-child(5) {
+    grid-column: 1 / -1 !important;
+}
+
+/* Charts: two equal columns without clipping */
+@media (min-width: 1200px) {
+    .meeting-dashboard-split .meeting-dashboard-charts {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+    }
+}
+
+.meeting-dashboard-split .meeting-dashboard-charts {
+    margin-top: 12px !important;
+    flex: 1 !important;
+}
+
+.meeting-dashboard-split .meeting-chart-panel {
+    min-width: 0 !important;
+    padding: 12px !important;
+    overflow: visible !important;
+}
+
+.meeting-dashboard-split .meeting-chart-panel h4 {
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 10px !important;
+}
+
+/* Restore complete chart visibility */
+.meeting-dashboard-split .meeting-chart-panel .chart-container {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+.meeting-dashboard-split .meeting-chart-panel svg {
+    max-width: 100% !important;
+}
+
+/* Equal card appearance */
+.meeting-dashboard-split .meeting-stat-body h3 {
+    font-size: 24px !important;
+}
+
+@media (max-width: 1199px) {
+    .meeting-dashboard-split .meeting-dashboard-charts {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Draft Meetings: same full-width layout as Overdue Tasks */
+.meeting-dashboard-split #meetings-overview
+.meeting-stat-card.meeting-stat--draft {
+    grid-column: 1 / -1 !important;
+    background: #fdf2f8 !important;
+    border-left: 5px solid #db2777 !important;
+    border-top: 3px solid #db2777 !important;
+}
+
+.meeting-dashboard-split .meeting-overview-panel {
+    align-self: stretch !important;
+}
+
+/* Draft Meetings full-width card */
+.meeting-dashboard-split #meetings-overview .meeting-dashboard-stats > .meeting-stat--draft {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    min-height: 85px !important;
+    background: #fdf2f8 !important;
+    border-left: 5px solid #db2777 !important;
+    border-top: 3px solid #db2777 !important;
+}
+
+
+/* Complete chart labels */
+.meeting-dashboard-split .meeting-chart-panel .graph-stats-container {
+    display: none !important;
+}
+
+.meeting-custom-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 12px;
+    margin-top: 8px;
+}
+
+.meeting-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.meeting-legend-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.meeting-bar-labels {
+    display: flex;
+    justify-content: space-around;
+    gap: 4px;
+    margin-top: 5px;
+    font-size: 11px;
+}
+
+.meeting-dashboard-split #task-progress-chart .x.axis text {
+    display: none !important;
+}
+
+/* Small colored squares before chart labels */
+.meeting-bar-labels span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.meeting-bar-labels span::before {
+    content: "";
+    width: 9px;
+    height: 9px;
+    border-radius: 2px;
+    background: #f47cac;
+    flex-shrink: 0;
+}
+
+.meeting-bar-labels span:nth-child(2)::before {
+    background: #348bd2;
+}
+
+.meeting-bar-labels span:nth-child(3)::before {
+    background: #49b978;
+}
+
+.meeting-legend-dot {
+    display: inline-block !important;
+    width: 9px !important;
+    height: 9px !important;
+    border-radius: 2px !important;
+    flex-shrink: 0;
+}

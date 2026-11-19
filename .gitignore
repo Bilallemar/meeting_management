@@ -53,3 +53,18 @@ jspm_packages/
 
 # Aider AI Chat
 .aider*
+
+# Local development backups
+*.backup
+*.backup2
+*.bak
+*.before_*_backup
+*.broken_backup
+*.overdue_backup
+*.tasks_backup
+*.vote_backup
+*.tabs_backup
+*.header_backup
+*.before_project_filter
+*.inline_backup
+/meeting_management/doctype/

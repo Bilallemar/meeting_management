@@ -1,0 +1,10 @@
+{
+  "doctype": "Page",
+  "name": "meeting-management-list",
+  "page_name": "meeting-management-list",
+  "module": "Meeting Management",
+  "title": "Meeting List",
+  "standard": "Yes",
+  "system_page": 0,
+  "roles": []
+}

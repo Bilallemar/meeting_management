@@ -3,7 +3,7 @@
  "allow_bulk_edit": 1,
  "allow_rename": 1,
  "creation": "2026-10-08 11:28:49.729403",
- "custom": 1,
+ "custom": 0,
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -50,8 +50,9 @@
    "default": "Pending",
    "fieldname": "confirmation",
    "fieldtype": "Select",
-   "label": "Confirmation",
-   "options": "Pending\nConfirmed\nRejected"
+   "label": "Attendance Response",
+   "options": "Pending\nConfirmed\nRejected",
+   "read_only": 1
   },
   {
    "fieldname": "confirmed_on",
