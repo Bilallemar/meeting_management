@@ -1,0 +1,26 @@
+{
+  "doctype": "Sidebar",
+  "name": "Meeting Management",
+  "title": "Meeting Management",
+  "module": "Meeting Management",
+  "app": "meeting_management",
+  "standard": 1,
+  "items": [
+    {
+      "type": "Link",
+      "label": "Meeting Dashboard",
+      "link_type": "Page",
+      "link_to": "meeting-management-dashboard",
+      "open_in_new_tab": 0,
+      "child": 0
+    },
+    {
+      "type": "Link",
+      "label": "Meeting List",
+      "link_type": "Page",
+      "link_to": "meeting-management-list",
+      "open_in_new_tab": 0,
+      "child": 0
+    }
+  ]
+}

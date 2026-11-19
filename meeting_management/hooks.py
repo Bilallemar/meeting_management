@@ -19,7 +19,8 @@ app_include_js = ["/assets/meeting_management/js/meeting_redirect.js"]
 
 fixtures = [
     {"dt": "Desktop Icon", "filters": [["name", "in", ["Meeting Management", "Meeting Dashboard"]]]},
-    {"dt": "Workspace Sidebar", "filters": [["name", "=", "Meeting Management"]]},
+{"dt": "Workflow State", "filters": [["name", "in", ["Draft", "Scheduled", "Held", "Closed", "Confirmed", "Minutes Draft", "Pending Confirmation"]]]},
+   
     {
         "dt": "Workflow",
         "filters": [
