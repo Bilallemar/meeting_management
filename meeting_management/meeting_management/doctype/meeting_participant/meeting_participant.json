@@ -31,20 +31,23 @@
    "fieldname": "member_name",
    "fieldtype": "Data",
    "label": "Member Name",
-   "read_only": 1
+   "read_only": 1,
+   "in_list_view": 1
   },
   {
    "fieldname": "role",
    "fieldtype": "Select",
    "label": "Role",
-   "options": "Chairperson\nMember\nSecretary"
+   "options": "Chairperson\nMember\nSecretary",
+   "in_list_view": 1
   },
   {
    "default": "Pending",
    "fieldname": "attendance",
    "fieldtype": "Select",
    "label": "Attendance",
-   "options": "Pending\nPresent\nAbsent"
+   "options": "Pending\nPresent\nAbsent",
+   "in_list_view": 1
   },
   {
    "default": "Pending",
@@ -52,7 +55,8 @@
    "fieldtype": "Select",
    "label": "Attendance Response",
    "options": "Pending\nConfirmed\nRejected",
-   "read_only": 1
+   "read_only": 1,
+   "in_list_view": 1
   },
   {
    "fieldname": "confirmed_on",
