@@ -618,7 +618,7 @@ load_task_dashboard();
                                                         item.member === meeting.current_employee
                                         );
 
-                                        if (meeting.can_vote && !own_vote) {
+                                        if (meeting.can_vote && (!own_vote || own_vote.response === "Pending")) {
                                                 $("<p>").text(
                                                         "Your response: " + (own_vote ? own_vote.response : "Pending")
                                                 ).appendTo(panel);

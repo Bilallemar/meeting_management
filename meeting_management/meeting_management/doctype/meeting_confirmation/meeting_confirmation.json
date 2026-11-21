@@ -24,7 +24,7 @@
   },
   {
    "fieldname": "decision",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Decision"
   },
   {
